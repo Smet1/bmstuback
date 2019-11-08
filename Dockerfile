@@ -18,4 +18,7 @@ ADD . /app
 
 EXPOSE 80
 
-CMD python3 main.py
+RUN pwd
+RUN chmod +x run.sh
+
+CMD /app/run.sh

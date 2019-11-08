@@ -1,6 +1,7 @@
 version: '3.3'
 services:
   db:
+    container_name: mysql
     image: mysql:5.7
     restart: always
     environment:
@@ -21,15 +22,18 @@ services:
     # volumes:
       # - my-db:/var/lib/mysql
     # command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
-# Names our volume
-volumes:
-  my-db:
   
-  # bmstu:
-  #   container_name: bmstu-main
-  #   restart: always
-  #   build:
-  #     context: ./.
-  #     dockerfile: ./Dockerfile
-  #   depends_on: 
-  #     - mysql
+  bmstu:
+    container_name: bmstu-main
+    restart: always
+    build:
+      context: ./.
+      dockerfile: ./Dockerfile
+    # command:
+      # ['./run.sh']
+    depends_on: 
+      - db
+  
+# Names our volume
+# volumes:
+  # my-db:
