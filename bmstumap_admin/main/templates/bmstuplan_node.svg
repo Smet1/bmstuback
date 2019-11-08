@@ -1,0 +1,7 @@
+{% extends 'base.svg' %}
+
+{% block extra %}
+{% if node %}
+<circle fill="red" cx="{{ node.latitude }}" cy="{{ node.longitude }}" r="5"/>
+{% endif %}
+{% endblock %}

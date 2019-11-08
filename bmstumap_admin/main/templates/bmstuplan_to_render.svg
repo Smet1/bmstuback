@@ -1,0 +1,15 @@
+{% extends 'base.svg' %}
+{% block extra %}
+{% for node1, node2 in path %}
+<line class="st1" x1="{{ node1.latitude }}" y1="{{ node1.longitude }}" x2="{{ node2.latitude }}" y2="{{ node2.longitude }}" />
+{% endfor %}
+
+<!-- ToDo: add proper labels -->
+<!-- <text x="{{ marker.latitude }}" y="{{ marker.longitude }}">{{ marker.name }}</text> -->
+{% if start %}
+<circle fill="red" cx="{{ start.latitude }}" cy="{{ start.longitude }}" r="5"/>
+{% endif %}
+{% if end %}
+<circle fill="green" cx="{{ end.latitude }}" cy="{{ end.longitude }}" r="5"/>
+{% endif %}
+{% endblock %}

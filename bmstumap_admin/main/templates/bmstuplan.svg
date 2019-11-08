@@ -1,0 +1,14 @@
+{% extends 'base.svg' %}
+
+{% block extra %}
+<!-- ToDo: add labels -->
+{% for marker in markers %}
+<circle class="st1" cx="{{ marker.latitude }}" cy="{{ marker.longitude }}" r="5"/>
+{% if marker.auditoria %}
+<text x="{{ marker.latitude }}" y="{{ marker.longitude }}">{{ marker.name }}</text>
+{% endif %}
+{% if marker.node %}
+<line class="st1" x1="{{ marker.latitude }}" y1="{{ marker.longitude }}" x2="{{ marker.node.latitude }}" y2="{{ marker.node.longitude }}" />
+{% endif %}
+{% endfor %}
+{% endblock %}
