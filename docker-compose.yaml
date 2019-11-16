@@ -23,16 +23,16 @@ services:
       # - my-db:/var/lib/mysql
     # command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
   
-  bmstu:
-    container_name: bmstu-main
-    restart: always
-    build:
-      context: ./.
-      dockerfile: ./Dockerfile
-    # command:
-      # ['./run.sh']
-    depends_on: 
-      - db
+  # bmstu:
+  #   container_name: bmstu-main
+  #   restart: always
+  #   build:
+  #     context: ./.
+  #     dockerfile: ./Dockerfile
+  #   # command:
+  #     # ['./run.sh']
+  #   depends_on: 
+  #     - db
   
 # Names our volume
 # volumes:
