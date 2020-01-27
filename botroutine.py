@@ -1,11 +1,11 @@
-from proxybot import ProxyBot
-from aiotg import Chat
-import os
-import settings
 import json
-
-from aiomysql.sa import create_engine
 import logging
+import os
+
+from aiotg import Chat
+
+import settings
+from proxybot import ProxyBot
 
 log = logging.getLogger('bot')
 
@@ -93,7 +93,6 @@ async def building_plan(chat: Chat, match):
 @bot.command(r"(?i:/proff|где) (.*)")
 @typing_status
 async def get_proff(chat: Chat, match):
-
     async with bot._db_conn.acquire() as conn:
         query = """
             SELECT *
@@ -129,18 +128,17 @@ async def get_proff(chat: Chat, match):
 
         if result and len(result) > 1:
             kb = {
-                    'type': 'InlineKeyboardMarkup',
-                    "inline_keyboard": list([
-                        [{
-                            'type': 'InlineKeyboardButton',
-                            "text": "{} {} {}".format(i.last_name, i.first_name, i.middle_name),
-                            "callback_data": "proff-{}".format(i.id)
-                        }] for i in result
-                    ])
-                }
+                'type': 'InlineKeyboardMarkup',
+                "inline_keyboard": list([
+                    [{
+                        'type': 'InlineKeyboardButton',
+                        "text": "{} {} {}".format(i.last_name, i.first_name, i.middle_name),
+                        "callback_data": "proff-{}".format(i.id)
+                    }] for i in result
+                ])
+            }
             log.debug(kb)
             return chat.send_text('Уточните запрос', reply_markup=json.dumps(kb))
-
 
     return chat.reply("По вашему запросу ничего не найдено")
 
@@ -148,7 +146,6 @@ async def get_proff(chat: Chat, match):
 @bot.command(r"/find (\d+.*?) (\d+.*)")
 @typing_status
 async def find_path(chat: Chat, match):
-
     async with bot._db_conn.acquire() as conn:
         query = """
             SELECT *
@@ -188,7 +185,6 @@ async def find_path(chat: Chat, match):
 @bot.command(r"/pos (.*)")
 @typing_status
 async def posheldfind(chat: Chat, match):
-
     async with bot._db_conn.acquire() as conn:
         query = """
             SELECT

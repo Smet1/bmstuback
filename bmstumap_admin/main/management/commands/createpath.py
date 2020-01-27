@@ -1,9 +1,10 @@
-from django.core.management.base import BaseCommand
-from main.models import Cabinet
-from django.template.loader import get_template
 import os
-from django.conf import settings
 from itertools import chain
+
+from django.conf import settings
+from django.core.management.base import BaseCommand
+from django.template.loader import get_template
+from main.models import Cabinet
 
 
 class Command(BaseCommand):
@@ -18,8 +19,9 @@ class Command(BaseCommand):
         query = Cabinet.objects.all().order_by('id')
         list_of_pks = list(map(lambda x: x, query))
 
-        list_of_adjacency = [ set(chain(map(lambda x: list_of_pks.index(x), Cabinet.objects.filter(node=i)), [i.node_id - 1] if i.node_id else [])) for i in list_of_pks ]
-        visited = [False ] * len(list_of_adjacency)
+        list_of_adjacency = [set(chain(map(lambda x: list_of_pks.index(x), Cabinet.objects.filter(node=i)),
+                                       [i.node_id - 1] if i.node_id else [])) for i in list_of_pks]
+        visited = [False] * len(list_of_adjacency)
         prev = [None] * len(list_of_adjacency)
 
         def dfs(start):
@@ -36,11 +38,10 @@ class Command(BaseCommand):
         current = list_of_pks.index(end)
         while current != None:
             next = prev[current]
-            path.append( (list_of_pks[current], list_of_pks[next if next else s_pk]) )
+            path.append((list_of_pks[current], list_of_pks[next if next else s_pk]))
             current = next
 
         return path
-
 
     def handle(self, start_id, end_id, **options):
         print('finding path')
@@ -53,5 +54,6 @@ class Command(BaseCommand):
         path = self.depth_search(start, end)
 
         plan = get_template('bmstuplan_to_render.svg')
-        with open(os.path.join(settings.BASE_DIR, 'paths/bmstuplan_{}_to_{}.svg').format(start.pk, end.pk), 'w', encoding="utf-8") as file:
+        with open(os.path.join(settings.BASE_DIR, 'paths/bmstuplan_{}_to_{}.svg').format(start.pk, end.pk), 'w',
+                  encoding="utf-8") as file:
             file.write(plan.render({'path': path, 'start': start, 'end': end}))
