@@ -1,4 +1,4 @@
-aiohttp==3.6.2
+aiohttp==3.7.4
 aiomysql==0.0.14
 aiosocksy==0.1
 aiotg==0.9.9
